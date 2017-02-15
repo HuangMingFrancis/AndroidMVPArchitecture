@@ -1,67 +1,62 @@
 package com.sherlockshi.androidmvparchitecture.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.francis.commonlibrary.utils.Toaster;
 import com.sherlockshi.androidmvparchitecture.R;
 import com.sherlockshi.androidmvparchitecture.base.BaseActivity;
 import com.sherlockshi.androidmvparchitecture.business.login.LoginContract;
 import com.sherlockshi.androidmvparchitecture.business.login.LoginPresenter;
-import com.sherlockshi.androidmvparchitecture.util.Toaster;
-import com.sherlockshi.androidmvparchitecture.util.animation.AnimationUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by Francis on 2017-2-7.
  */
-public class LoginActivity extends BaseActivity implements LoginContract.IView {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.IView {
     private static final String TAG = "LoginActivity";
-    @BindView(R.id.btn_register)
-    Button btnRegister;
-    @BindView(R.id.btn_login)
-    Button btnLogin;
     @BindView(R.id.et_login_name)
     EditText etLoginName;
     @BindView(R.id.et_login_psw)
     EditText etLoginPsw;
-
-
-    private LoginPresenter loginPresenter;
+    @BindView(R.id.btn_register)
+    Button btnRegister;
+    @BindView(R.id.btn_login)
+    Button btnLogin;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+    protected int getContentViewLayoutID() {
+        return R.layout.activity_login;
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void getBundleExtras(Bundle extras) {
+
+    }
+
+    @Override
+    protected void initViewsAndEvents() {
         initData();
     }
 
-    private void initData() {
-        loginPresenter = new LoginPresenter(this, this);
+    @Override
+    protected int getOverridePendingTransitionMode() {
+        return BaseActivity.FADE;
     }
 
-    @OnClick({R.id.btn_register, R.id.btn_login})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_register:
-                break;
-            case R.id.btn_login:
-                loginPresenter.login(etLoginName.getText().toString(), etLoginPsw.getText().toString());
-                break;
-        }
+    @Override
+    protected void DetoryViewAndThing() {
+        Toaster.closeToast();
     }
+
+    private void initData() {
+        presenter = new LoginPresenter(mContext,this);
+    }
+
 
     @Override
     public void showLoading() {
@@ -80,9 +75,19 @@ public class LoginActivity extends BaseActivity implements LoginContract.IView {
 
     @Override
     public void goToMainActivity() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        AnimationUtil.pushIn(LoginActivity.this);
-        finish();
+        readyGoThenKill(DrawerActivity.class);
     }
 
+
+    @OnClick({R.id.btn_register, R.id.btn_login})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_register:
+                Toaster.showShort(LoginActivity.this, "register");
+                break;
+            case R.id.btn_login:
+                presenter.login(etLoginName.getText().toString(), etLoginPsw.getText().toString());
+                break;
+        }
+    }
 }

@@ -7,5 +7,4 @@ package com.sherlockshi.androidmvparchitecture.base.presenter;
  */
 
 public interface IBasePresenter {
-
 }

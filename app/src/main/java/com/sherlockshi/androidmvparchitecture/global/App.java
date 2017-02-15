@@ -48,7 +48,7 @@ public class App extends Application {
 
 
         initDataBase();
-        initBomb();
+//        initBomb();
     }
 
     //初始化数据库

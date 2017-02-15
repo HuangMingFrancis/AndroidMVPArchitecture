@@ -1,4 +1,4 @@
-package com.sherlockshi.androidmvparchitecture.util;
+package com.francis.commonlibrary.utils;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -27,5 +27,9 @@ public class Toaster {
             toast.setText(msg);
         }
         toast.show();
+    }
+    public static void closeToast(){
+        if (toast!=null)
+            toast=null;
     }
 }
