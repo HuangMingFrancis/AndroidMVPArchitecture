@@ -1,6 +1,7 @@
 package com.sherlockshi.androidmvparchitecture.view.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,7 @@ import butterknife.OnClick;
 /**
  * Created by Francis on 2017-2-7.
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.IView {
+public class LoginActivity extends BaseActivity implements LoginContract.IView {
     private static final String TAG = "LoginActivity";
     @BindView(R.id.et_login_name)
     EditText etLoginName;
@@ -27,6 +28,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     Button btnRegister;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.text_input_login)
+    TextInputLayout textInputLogin;
+    @BindView(R.id.text_input_psw)
+    TextInputLayout textInputPsw;
+
+    private LoginPresenter presenter;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -54,7 +61,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     private void initData() {
-        presenter = new LoginPresenter(mContext,this);
+        presenter = new LoginPresenter(mContext, this);
     }
 
 
@@ -78,16 +85,36 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         readyGoThenKill(DrawerActivity.class);
     }
 
+    @Override
+    public void showNoUserName(boolean isValue) {
+        if (isValue){
+            textInputLogin.setError(null);
+        }else{
+            textInputLogin.setError("账号不能为空!");
+        }
+    }
+
+    @Override
+    public void showNoPassWord(boolean isValue) {
+        if (isValue){
+            textInputPsw.setError(null);
+        }else{
+            textInputPsw.setError("密码不能为空!");
+        }
+    }
+
 
     @OnClick({R.id.btn_register, R.id.btn_login})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_register:
-                Toaster.showShort(LoginActivity.this, "register");
+//                Toaster.showShort(LoginActivity.this, "register");
+                presenter.testJsoup();
                 break;
             case R.id.btn_login:
                 presenter.login(etLoginName.getText().toString(), etLoginPsw.getText().toString());
                 break;
         }
     }
+
 }

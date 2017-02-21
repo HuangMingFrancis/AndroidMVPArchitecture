@@ -27,7 +27,7 @@ public class App extends Application {
 
     private DaoSession daoSession;
     //判断数据库是否加密
-    public static final boolean ENCRYPTED = true;
+    public static final boolean ENCRYPTED = false;
 
     @Override public void onCreate() {
         super.onCreate();

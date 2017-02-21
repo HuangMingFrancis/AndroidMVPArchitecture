@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity<CookDetailPresenter> implements CookDetailContract.IView {
+public class MainActivity extends BaseActivity implements CookDetailContract.IView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -36,6 +36,8 @@ public class MainActivity extends BaseActivity<CookDetailPresenter> implements C
     private int id = 23;
 
     private static final String TAG = "MainActivity";
+
+    private CookDetailPresenter presenter;
 
     @Override
     protected int getContentViewLayoutID() {

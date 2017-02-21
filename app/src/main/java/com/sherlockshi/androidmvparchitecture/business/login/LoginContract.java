@@ -9,6 +9,8 @@ import com.sherlockshi.androidmvparchitecture.base.view.IBaseView;
 public interface LoginContract {
     interface IView extends IBaseView{
         void goToMainActivity();
+        void showNoUserName(boolean isValue);
+        void showNoPassWord(boolean isValue);
     }
 
     interface IPresenter extends IBasePresenter{

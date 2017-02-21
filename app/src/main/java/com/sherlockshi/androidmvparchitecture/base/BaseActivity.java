@@ -16,11 +16,10 @@ import butterknife.ButterKnife;
 /**
  * Created by Francis on 2017-2-7.
  */
-public abstract class BaseActivity<T> extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext = null;
     public static final int LEFT = 1, RIGHT = 2, TOP = 3, BOTTOM = 4, SCALE = 5, FADE = 6;
-    public T presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
